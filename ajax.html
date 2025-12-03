@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+
+<button id="btn">Load</button>
+<pre id="output"></pre>
+
+<script>
+$("#btn").click(function() {
+
+    $.ajax({
+        url: "https://gist.githubusercontent.com/Aliendroid8045/b09f9ac24273b6fd8e5184bdf1d3a62e/raw/c0fbbe02a3973477f3e18fdf16cb9b1a7f979f6a/Animal.Json",
+        method: "GET",
+        dataType: "json",   
+
+        success: function(data) {
+            if (!Array.isArray(data)) {
+                $("#output").text("JSON format is not an array. Cannot access 4th item.");
+                return;
+            }
+
+            let item4 = data[3]; 
+
+            if (item4 === undefined) {
+                $("#output").text("4th item not found in the JSON.");
+            } else {
+                $("#output").text(JSON.stringify(item4, null, 2));
+            }
+        },
+
+        error: function(error) {
+            $("#output").text("Error: " + error.statusText);
+        }
+    });
+
+});
+</script>
+
+</body>
+</html>
